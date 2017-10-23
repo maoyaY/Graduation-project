@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YummyCake定制属于您的专属蛋糕</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/common/bootstrap.css">
+    <link rel="stylesheet" href="../../static/css/common/common.css">
+    <link rel="stylesheet" href="../../static/css/administrator/common.css">
+    <style>
+
+    </style>
+</head>
+<body>
+<a name="top1"></a>
+
+<!--页面头部logo-->
+<header id="headerTop">
+
+</header>
+<!--主体部分-->
+<div class="container">
+    <h4 class="b" id="statusName">用户信息</h4>
+    <table class="table table-hover table-bordered mt10">
+        <thead>
+        <tr>
+            <td>用户id</td>
+            <td>用户姓名</td>
+            <td>真实姓名</td>
+            <td>生日</td>
+            <td>联系地址</td>
+            <td>联系方式</td>
+            <td>性别</td>
+            <td>邮箱</td>
+            <td>qq</td>
+            <td>操作</td>
+        </tr>
+
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+
+<!--页面底部购物指南等-->
+<footer id="footer">
+</footer>
+
+<script src="../../static/js/common/jquery.js"></script>
+<script src="../../static/js/common/common.js"></script>
+<script src="../../static/js/administrator/common.js"></script>
+<script src="../../static/js/common/bootstrap.js"></script>
+<script>
+    function getInfo() {
+        $.ajax({
+            type:'GET',
+            url:'../../php/admin/customer.php',
+            success:function (data) {
+                var html = '';
+                $.each(data,function(i,p){
+                    html +=` <tr>
+                            <td>${p.u_id}</td>
+                            <td>${p.u_name}</td>
+                            <td>${p.u_trueName}</td>
+                            <td>${p.u_birth}</td>
+                            <td>${p.u_location}</td>
+                            <td>${p.u_tel}</td>
+                            <td>${p.u_sex}</td>
+                            <td>${p.u_email}</td>
+                            <td>${p.u_qq}</td>
+                            <td><a href="#">详情</a>&nbsp;&nbsp;&nbsp;<a href="#" data-id="${p.u_id}" class="delete">删除</a></td>
+                        </tr>`
+                });
+                $('tbody').html(html);
+            }
+        });
+    }
+    getInfo();
+    $('#container').on('click','.delete',function(e){
+        e.preventDefault();
+        $.ajax({
+            type:'DELETE',
+            url:'../../php/admin/deleteC.php?u_id='+$(this).data('id'),
+            success:function () {
+                alert('删除成功');
+                getInfo();
+            }
+        })
+    })
+
+</script>
+</body>
+</html>

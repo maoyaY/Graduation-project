@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YummyCake定制属于您的专属蛋糕</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/customer/center.css">
+</head>
+<body>
+
+<header id="header"></header>
+<section id="section">
+    <div id="loc">
+        <a href="../index/index.html">首页</a>
+        > <a href="center.html">个人中心</a>
+        >个人资料
+    </div>
+    <div class="over">
+        <div class="personal-lf lf">
+            <ul>
+                <li class="personal-title ">
+                    个人中心
+                </li>
+                <li ><a href="centerPerson.html" class="active1">个人资料</a></li>
+                <li><a href="centerOrder.html" >我的订单</a></li>
+                <li><a href="centerScore.html" >我的积分</a></li>
+                <li><a href="centerVip.html" >会员信息</a></li>
+                <li><a href="centerMoney.html" >我的资金</a></li>
+                <li><a href="centerRecharge.html" >在线充值</a></li>
+                <li><a href="centerVoucher.html" >代金券</a></li>
+                <li><a href="centerLocation.html" >收货地址</a></li>
+                <li><a href="centerDate.html" >我的纪念日</a></li>
+                <li><a href="centerPwd.html" >密码维护</a></li>
+                <li><a href="centerStroy.html" >我的故事</a></li>
+                <li><a href="../happiness/upload.html" >上传故事</a></li>
+            </ul>
+        </div>
+        <div class="personal-rt lf">
+            <p class="personal-title">个人资料</p>
+            <div class="personal-info">
+                <form action="#" id="personal_form">
+                    <!--"您现在未登录，无法进行该模块操作"-->
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<footer id="footer">
+</footer>
+<script src="../../static/js/common/jquery.js"></script>
+<script src="../../static/js/common/common.js"></script>
+<script>
+    $(function () {
+        var _data=window.sessionStorage.getItem('loginName') || window.localStorage.getItem('loginName');
+        if(_data){
+            $.ajax({
+                type:'POST',
+                url:'../../php/person_info.php',
+                data:{u_name:_data},
+                success:function (res) {
+                    var _res = res[0];
+                    console.log(_res);
+                    var u_trueName = _res.u_trueName || "";
+                    var u_tel = _res.u_tel || "";
+                    var u_email = _res.u_email || "";
+                    var u_qq= _res.u_qq || "";
+
+                    var html =`<table>
+                        <tbody>
+                        <tr>
+                            <input type="hidden" name="u_name" value="${_res.u_name}">
+                             <input type="hidden" name="u_pwd" value="${_res.u_pwd}">
+                            <td width="101">用户名：</td>
+                            <td width="295">${_res.u_name}</td>
+                            <td width="101"></td>
+                            <td width="262"></td>
+                        </tr>
+                        <tr>
+                            <td>真实姓名：</td>
+                            <td><input type="text" name="u_true" value="${u_trueName}"></td>
+                            <td>性别：</td>
+                            <td class="dan"><input type="radio" name="u_sex" value="1" id="f_mel" checked>女<input id="mel" type="radio" name="u_sex" value="2">男 </td>
+                        </tr>
+                        <tr>
+                            <td>生日：</td>
+                            <td><input type="text"  name="u_birth" value="${_res.u_birth}"></td>
+                            <td>联系电话：</td>
+                            <td><input  type="text" name="u_tel" value="${u_tel}" > </td>
+                        </tr>
+                        <tr>
+                            <td>联系地址：</td>
+                            <td><input  type="text" name="u_location" value="${_res.u_location}"></td>
+                            <td>电子邮件：</td>
+                            <td><input  type="text" name="u_email" value="${u_email}"> </td>
+                        </tr>
+                        <tr>
+                            <td>QQ：</td>
+                            <td><input  type="text"  name="u_qq" value="${u_qq}"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><a href="#" type="button" class="btn1" id="info_submit">提交修改</a><a href="#" type="reset" class="btn1">清除重填</a></td>
+                            <td></td>
+                            <td> </td>
+                        </tr>
+                        </tbody>
+                    </table>`;
+                    $('#personal_form').html(html);
+                    $('#personal_form').on('click','#info_submit',function (e) {
+                        e.preventDefault();
+                        var _data = $('#personal_form').serialize();
+                        $.ajax({
+                            type:'POST',
+                            url:'../../php/personInfo_register.php',
+                            data:_data,
+                            success:function (res) {
+                                alert('保存成功！');
+                            },
+                            error:function (res) {
+                                alert('系统繁忙，请稍后再试！');
+                            }
+                        })
+                    })
+                },
+                error:function (res) {
+
+                }
+            })
+        }
+        else{
+            window.location.href = "../index/index.html";
+        }
+
+    })
+</script>
+</body>
+</html>

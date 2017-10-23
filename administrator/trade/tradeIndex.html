@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YummyCake定制属于您的专属蛋糕</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/common/bootstrap.css">
+    <link rel="stylesheet" href="../../static/css/common/common.css">
+    <link rel="stylesheet" href="../../static/css/administrator/common.css">
+    <style>
+        .btn{width:80px;padding:5px 12px;margin-bottom:5px;}
+        .media-left img{width:150px;height:150px;}
+        .media-body p{padding-top:5px;}
+        .dataCompass-left{width: 300px;}
+        .dataCompass-title{padding: 40px;margin: 10px 0;border-bottom: 1px solid #eeeeee;}
+        .dataCompass-right{width: 410px;}
+         .dataCompass-yb .containerText { position: absolute; width: 120px; height: 60px; text-align: center; left: 50%; margin-left: 7px; top: 107px;font-size:20px; }
+        .dataCompass-right ul li{height:54px;width: 410px;}
+        .dataCompass-right ul li a{float: left;width: 100%;height: 100%;padding-top: 10px;padding-left: 8px;color: #6B3908!important;border-bottom: 1px solid #f3f3f3;}
+        .dataCompass-right ul li p{height: 24px;line-height: 30px;}
+        .cashierReport { border-top: 1px solid #eeeeee; border-bottom: 1px solid #eeeeee; margin: 10px 0; }
+        .inputH30.inputDate {width: 152px; background-position: 148px -1658px !important; height: 30px; line-height: 18px; padding: 8px 9px; border: 1px solid #e5e5e5; font-size: 14px; background: #fff; -webkit-transition: border 0.5s; -moz-transition: border 0.5s; -ms-transition: border 0.5s; -o-transition: border 0.5s; transition: border 0.5s; }
+        .cashierReport .row .btnP { background-color: #ffffff!important; border: 1px solid #e2e2e2; height: 32px;color:#6B3908; }
+    </style>
+</head>
+<body>
+<a name="top1"></a>
+
+<!--页面头部logo-->
+<header id="headerTop"></header>
+<!--主体部分-->
+<div class="container">
+    <div class="cashierReport clearfix" style="padding: 20px 0;">
+        <p class="b lf f16" style="font-size: 14px;height:32px;line-height: 32px; ">交易时间</p>
+        <form id="J_SearchForm" class="form rt clearfix" action="" method="post">
+            <div class="row rowH50 ">
+                <input type="date"  class="lf inputH30 inputDate  mr10"  placeholder="请选择开始时间" name="" value="" >
+                <span class="lf mr10">至</span>
+                <input type="date"  class="lf inputH30 inputDate " placeholder="请选择结束时间" name="" value="" >
+                <div class="rowC lf">
+                    <button id="J_BtnSubmit" type="submit" class="btn   mr10 J_BtnSubmit btnP" style="padding: 0 20px;">查询</button>
+                </div>
+                <div class="row">
+                    <div id="J_Error" class="err" style="padding-left: 77px; line-height: 18px;"></div>
+                </div>
+            </div>
+
+            <input class="J_CurPage" type="hidden" name="currentPage" value="1">
+            <input class="J_PageSize" type="hidden" name="pageSize" value="10">
+        </form>
+    </div>
+    <div class="dataCompass-title clearfix" data-url="">
+        <div class="dataCompass-left lf">
+            <div class="dataCompass-yb" style="position:relative;">
+                <div id="container" style="width: 430px;height: 280px; margin: 0 auto;">
+                </div>
+                <div id="J_ContainerText" class="containerText" ></div>
+            </div>
+        </div>
+        <div class="dataCompass-right rt">
+            <ul class="f14 ul" data-url="">
+                <li id="J_PayWayCard" class="clearfix">
+                    <a href="#">
+                        <p class="lf b pl10 pr10">未完成 </p>
+                        <p class="lf count">3笔</p>
+                        <div class="rt money">
+                            <p class="right">1000元
+                            </p>
+                        </div>
+                    </a>
+
+                </li>
+                <li id="J_PayWayAlipay" class="clearfix">
+                    <a href="#">
+                        <p class="lf b pl10 pr10">通知配送 </p>
+                        <p class="lf count">1笔</p>
+                        <div class="rt money">
+                            <p class="right" >200元<br>
+                            </p>
+                        </div>
+                    </a>
+
+                </li>
+                <li  id="J_PayWayWei" class="clearfix">
+                    <a href="#">
+                        <p class="lf b pl10 pr10">配送中 </p>
+                        <p class="lf count">2笔</p>
+                        <div class="rt money">
+                            <p class="right" >300元
+                            </p>
+                        </div>
+                    </a>
+                </li>
+                <li  id="J_PayWayXian" class="clearfix">
+                    <a href="#">
+                        <p class="lf b pl10 pr10">已送达 </p>
+                        <p class="lf  count">5笔</p>
+                        <div class="rt money">
+                            <p class="right" >600元</p>
+                        </div>
+                    </a>
+                </li>
+                <li  id="J_PayWayPiao" class="clearfix">
+                    <a href="#">
+                        <p class="lf b pl10 pr10">已完成 </p>
+                        <p class="lf  count">5笔</p>
+                        <div class="rt money">
+                            <p class="right" >899元</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <h4 class="b" id="statusName">全部</h4>
+    <table class="table table-hover table-bordered mt10">
+        <thead>
+        <tr>
+            <td>状态</td>
+            <td>状态时间</td>
+            <td>下单时间</td>
+            <td>商品名称</td>
+            <td>操作员</td>
+            <td>操作</td>
+        </tr>
+
+        </thead>
+        <tbody>
+        <tr>
+            <td>未完成</td>
+            <td>2017-1-12 12:23:23</td>
+            <td>2017-1-11 12:23:23</td>
+            <td>哆啦A梦</td>
+            <td>张三</td>
+            <td><a href="#">详情</a>&nbsp;&nbsp;&nbsp;<a href="#">删除</a></td>
+        </tr>
+        <tr>
+            <td>未完成</td>
+            <td>2017-1-12 12:23:23</td>
+            <td>2017-1-11 12:23:23</td>
+            <td>哆啦A梦</td>
+            <td>张三</td>
+            <td><a href="#">详情</a>&nbsp;&nbsp;&nbsp;<a href="#">删除</a></td>
+        </tr>
+        <tr>
+            <td>未完成</td>
+            <td>2017-1-12 12:23:23</td>
+            <td>2017-1-11 12:23:23</td>
+            <td>哆啦A梦</td>
+            <td>张三</td>
+            <td><a href="#">详情</a>&nbsp;&nbsp;&nbsp;<a href="#">删除</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--页面底部购物指南等-->
+<footer id="footer">
+</footer>
+
+<script src="../../static/js/common/jquery.js"></script>
+<script src="../../static/js/common/common.js"></script>
+<script src="../../static/js/administrator/common.js"></script>
+<script src="../../static/js/common/bootstrap.js"></script>
+<!--<script src="../../static/js/common/laydate.dev.js"></script>-->
+<script src="../../static/js/common/highcharts.js"></script>
+<script>
+    $('.dropdown-toggle').dropdown();
+    var _index = "";
+    var chartPie = Highcharts.chart('container', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        exporting: {
+            enabled: false
+        },
+        title: {
+            text: ""
+            //text: 'Browser market shares January, 2015 to May, 2015'
+        },
+        tooltip: {
+            pointFormat: ''//'{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                // 中间镂空
+                innerSize: '60%',
+                colors: ["#ffbc0b","#00b9f3","#32af4a","#ff5a88","#af66d9"],
+                //slicedOffset: 10,
+                dataLabels: {
+                    enabled: false,// true
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                },
+                events: {
+                    click: function(p){
+                        _index = p.point.index;
+                        $(".containerText").html(p.point.name + "<br>" + p.point.y);
+                        $(".dataCompass-right li").eq(_index).children('a').css("background-color","#f8f8f8");
+                        $(".dataCompass-right li").eq(_index).siblings().find('a').css("background-color","#ffffff");
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Brands',
+            colorByPoint: true,
+            data: [{
+                name: '未完成',
+                y: 56.33,
+                b: 2
+            }, {
+                name: '通知配送',
+                y: 24.03/*,
+                 sliced: true,
+                 selected: true*/
+            }, {
+                name: '配送中',
+                y: 10.38
+            }, {
+                name: '已送达',
+                y: 4.77
+            }, {
+                name: '已完成',
+                y: 0.91
+            }]
+        }]
+    });
+
+    $(".containerText").html(chartPie.series[0].data[0].name + "<br>" + chartPie.series[0].data[0].y);
+    $(".dataCompass-right").on('mouseover','ul li',function(){
+        var i = $(this).index();
+        $(this).children('a').css("background-color","#f8f8f8");
+        $(this).siblings('li').children('a').css("background-color","#ffffff");
+        containerTextShow(i);
+    });
+
+
+    function containerTextShow(i) {
+        if(!chartPie.series[0].data[i].selected)
+            chartPie.series[0].data[i].select();
+        $(".containerText").html(chartPie.series[0].data[i].name + "<br>" + chartPie.series[0].data[i].y);
+
+
+    }
+
+
+
+</script>
+</body>
+</html>

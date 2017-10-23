@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YummyCake定制属于您的专属蛋糕</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/common/bootstrap.css">
+    <link rel="stylesheet" href="../../static/css/common/common.css">
+    <link rel="stylesheet" href="../../static/css/administrator/common.css">
+    <style>
+        ul.pwd li{
+            margin: 20px 0;
+        }
+        ul.pwd li :first-child{
+            display: inline-block;
+            width: 100px;
+            text-align: right;
+        }
+        input{
+            width: 200px;
+            height: 24px;
+            text-align: center;
+            border: 1px solid #eeeeee;
+            background-color:#F9F6F1 ;
+            border-radius: 2px;
+        }
+        li.last-btn a{
+            display: inline-block;
+            padding: 8px 60px;
+            margin-right:10px;
+            border-radius: 5px;
+            background-color: #b0916a;
+            color: #ffffff;
+        }
+        li.last-btn a:hover{
+            background-color: #603723;
+        }
+    </style>
+</head>
+<body>
+<a name="top1"></a>
+
+<!--页面头部logo-->
+<header id="headerTop">
+
+</header>
+<!--主体部分-->
+<div class="container">
+
+    <form action="">
+        <ul class="pwd">
+            <li>
+                <label >用 户 名：</label>
+                <b class="u_name"></b>
+                <input type="text" name="a_name">
+            </li>
+            <li>
+                <label >密码：</label>
+                <input type="password" name="a_pwd" value="">
+            </li>
+            <li>
+                <label >管理员编号：</label>
+                <input type="text" name="a_code" value="">
+            </li>
+            <li class="last-btn">
+                <label ></label>
+                <a  href="#" id="pwd_submit">提交</a>
+            </li>
+        </ul>
+    </form>
+</div>
+
+<!--页面底部购物指南等-->
+<footer id="footer">
+</footer>
+
+<script src="../../static/js/common/jquery.js"></script>
+<script src="../../static/js/common/common.js"></script>
+<script src="../../static/js/administrator/common.js"></script>
+<script src="../../static/js/common/bootstrap.js"></script>
+<script>
+    function getInfo() {
+        $.ajax({
+            type:'POST',
+            url:'../../php/admin/addAdmin.php',
+            data:$('form').serialize(),
+            success:function (data) {
+               alert('添加成功')
+            }
+        });
+    }
+    $('#pwd_submit').click(function (e) {
+        e.preventDefault();
+        getInfo();
+    });
+
+
+</script>
+</body>
+</html>

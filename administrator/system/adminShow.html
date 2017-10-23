@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YummyCake定制属于您的专属蛋糕</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/common/bootstrap.css">
+    <link rel="stylesheet" href="../../static/css/common/common.css">
+    <link rel="stylesheet" href="../../static/css/administrator/common.css">
+    <style>
+
+    </style>
+</head>
+<body>
+<a name="top1"></a>
+
+<!--页面头部logo-->
+<header id="headerTop">
+
+</header>
+<!--主体部分-->
+<div class="container">
+    <h4 class="b" id="statusName">全部</h4>
+    <table class="table table-hover table-bordered mt10">
+        <thead>
+        <tr>
+            <td>管理员姓名</td>
+            <td>管理员代码</td>
+            <td>上次登录时间</td>
+            <td>操作</td>
+        </tr>
+
+        </thead>
+        <tbody>
+        <tr>
+            <td>duoduo</td>
+            <td>吴多情</td>
+            <td>1995-01-23</td>
+
+            <td><a href="#">详情</a>&nbsp;&nbsp;&nbsp;<a href="#">删除</a></td>
+        </tr>
+        <tr>
+            <td>duoduo</td>
+            <td>吴多情</td>
+            <td>1995-01-23</td>
+
+            <td><a href="#">详情</a>&nbsp;&nbsp;&nbsp;<a href="#">删除</a></td>
+        </tr>
+        <tr>
+            <td>duoduo</td>
+            <td>吴多情</td>
+            <td>1995-01-23</td>
+
+            <td><a href="#">详情</a>&nbsp;&nbsp;&nbsp;<a href="#">删除</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--页面底部购物指南等-->
+<footer id="footer">
+</footer>
+
+<script src="../../static/js/common/jquery.js"></script>
+<script src="../../static/js/common/common.js"></script>
+<script src="../../static/js/administrator/common.js"></script>
+<script src="../../static/js/common/bootstrap.js"></script>
+<script>
+    function getInfo() {
+        $.ajax({
+            type:'GET',
+            url:'../../php/admin/findAdmin.php',
+            success:function (data) {
+                var html = '';
+                $.each(data,function(i,p){
+                    html +=` <tr>
+                            <td>${p.a_name}</td>
+                            <td>${p.a_code}</td>
+                            <td>${p.a_date}</td>
+                            <td><a href="#">详情</a>&nbsp;&nbsp;&nbsp;<a href="#" data-id="${p.u_id}" class="delete">删除</a></td>
+                        </tr>`
+                });
+                $('tbody').html(html);
+            }
+        });
+    }
+    getInfo();
+    $('#container').on('click','.delete',function(e){
+        e.preventDefault();
+        $.ajax({
+            type:'DELETE',
+            url:'',
+            success:function () {
+                getInfo();
+            }
+        })
+    })
+
+</script>
+</body>
+</html>

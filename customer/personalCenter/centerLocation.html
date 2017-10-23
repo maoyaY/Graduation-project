@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YummyCake定制属于您的专属蛋糕</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/customer/center.css">
+    <style>
+        ul.pwd li{
+            margin: 20px 0;
+        }
+        ul.pwd li :first-child{
+            display: inline-block;
+            width: 100px;
+            text-align: right;
+        }
+        input{
+            width: 200px;
+            height: 24px;
+            text-align: center;
+            border: 1px solid #eeeeee;
+            background-color:#F9F6F1 ;
+            border-radius: 2px;
+        }
+        li.last-btn a{
+            display: inline-block;
+            padding: 8px 60px;
+            margin-right:10px;
+            border-radius: 5px;
+            background-color: #b0916a;
+            color: #ffffff;
+        }
+        li.last-btn a:hover{
+            background-color: #603723;
+        }
+    </style>
+</head>
+<body>
+
+<header id="header"></header>
+<section id="section">
+    <div id="loc">
+        <a href="../index/index.html">首页</a>
+        > <a href="center.html">个人中心</a>
+        >收货地址
+    </div>
+    <div class="over">
+        <div class="personal-lf lf">
+            <ul>
+                <li class="personal-title ">
+                    个人中心
+                </li>
+                <li ><a href="centerPerson.html" >个人资料</a></li>
+                <li><a href="centerOrder.html" >我的订单</a></li>
+                <li><a href="centerScore.html" >我的积分</a></li>
+                <li><a href="centerVip.html" >会员信息</a></li>
+                <li><a href="centerMoney.html" >我的资金</a></li>
+                <li><a href="centerRecharge.html" >在线充值</a></li>
+                <li><a href="centerVoucher.html" >代金券</a></li>
+                <li><a href="centerLocation.html" class="active1">收货地址</a></li>
+                <li><a href="centerDate.html" >我的纪念日</a></li>
+                <li><a href="centerPwd.html" >密码维护</a></li>
+                <li><a href="centerStroy.html" >我的故事</a></li>
+                <li><a href="../happiness/upload.html" >上传故事</a></li>
+            </ul>
+        </div>
+        <div class="personal-rt lf">
+            <p class="personal-title">收货地址</p>
+            <div class="personal-info" id="Look_location">
+                <p class="f16 rt-buy">默认收货地址将在购物时自动指定为您的当前送货地址，您可以选择使用或修改。</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <td width="5%"></td>
+                        <td width="20%">收货人姓名</td>
+                        <td width="35%">收货地址</td>
+                        <td width="20%">联系电话</td>
+                        <td width="20%">邮编</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <p class="rt-buy over p"><a href="#" class="rt btn1">修改</a> </p>
+            </div>
+            <!--<div class="personal-info hide" id="addLocation">-->
+                <!--<form action="#" class="pt20" id="location_form">-->
+                    <!--<input type="hidden" name="u_name" id="u_name">-->
+                    <!--<ul class="pwd">-->
+                        <!--<li>-->
+                            <!--<label >收货人姓名：</label>-->
+                            <!--<input type="text" name="s_name" value="">-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<label >收货地址：</label>-->
+                            <!--<input type="text" name="s_location" value="">-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<label >联系电话：</label>-->
+                            <!--<input type="text" name="s_tel" value="">-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<label >邮编：</label>-->
+                            <!--<input type="text" name="s_post" value="">-->
+                        <!--</li>-->
+                        <!--<li class="last-btn">-->
+                            <!--<label ></label>-->
+                            <!--<a type="submit" href="#" id="Loc_submit">提交</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</form>-->
+            <!--</div>-->
+        </div>
+
+    </div>
+
+</section>
+
+<footer id="footer">
+</footer>
+<script src="../../static/js/common/jquery.js"></script>
+<script src="../../static/js/common/common.js"></script>
+<script>
+    $(function () {
+        var _uname = window.sessionStorage.getItem('loginName')|| window.localStorage.getItem('loginName');
+        function initTable() {
+            $.ajax({
+                type:'post',
+                url:'../../php/search_location.php',
+                data:{'u_name':_uname},
+                success:function (res) {
+                    var _html = "";
+                    for(var i=0;i<res.length;i++){
+                        _html +=`<tr>
+                        <td class="dan"><input type="radio"></td>
+                        <td>${res[i].s_name}</td>
+                        <td>${res[i].s_location}</td>
+                        <td>${res[i].s_tel}</td>
+                        <td>${res[i].s_post}</td>
+                    </tr>`;
+                    }
+                    $('#Look_location table tbody').html(_html);
+                }
+            });
+        }
+        initTable();
+        $('#addLoc').click(function (e) {
+            e.preventDefault();
+            $(this).parent().parent('.personal-info').addClass('hide');
+            $('#addLocation').removeClass('hide');
+        });
+
+        $('#u_name').val(_uname);
+//        $('#Loc_submit').click(function(e){
+//            $('#addLocation').addClass('hide');
+//            $('#Look_location').removeClass('hide');
+////            请求  并添加到页面中（待处理）
+//            var _data = $('#location_form').serialize();
+//            $.ajax({
+//                type:'post',
+//                url:'../../php/add_location.php',
+//                data:_data,
+//                success:function (res) {
+//                    initTable();
+//                }
+//            })
+//
+//        });
+    });
+
+</script>
+</body>
+</html>

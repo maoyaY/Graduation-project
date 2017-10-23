@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YummyCake定制属于您的专属蛋糕</title>
+    <link type="text/css" href="../../static/css/common/common.css" rel="stylesheet" />
+    <link type="text/css" href="../../static/css/customer/center.css" rel="stylesheet" />
+    <style>
+        #section{
+            width: 1100px;
+            margin: 0 auto;
+        }
+        .vip-info{padding: 20px;border-radius: 5px;border: 1px solid #e7e7e7;}
+        .alert-center{
+            transform: translate(12%);
+        }
+        .sub{margin-top: 20px;}
+        .sub>a{
+            display: inline-block;
+            width: 100px;
+            height: 36px;
+            line-height: 36px;
+            font-size: 18px;
+            text-align: center;
+            color: #fff;
+            background-color: #f0ad4e;
+            border-color: #eea236;
+            border-radius: 5px;
+            margin-right: 150px;
+        }
+    </style>
+</head>
+<body>
+<a name="top1"></a>
+<!--头部nav和logo-->
+<header id="header">
+    <!--logo顶部内容-->
+</header>
+<!--section-->
+<section id="section">
+    <div id="loc">
+        <a href="../index/index.html">首页</a>
+        > 会员申请
+    </div>
+    <div class="p-bg vip-info">
+        <p>亲！您现在还不是会员，无法参与会员活动。参加会员活动请先申请会员哟！</p>
+        <p><b>提示：</b>会员信息一旦确定不可修改，如有问题请联系管理员。如对您造成不便，敬请谅解！</p>
+    </div>
+    <form action="#" class="apply" id="vip-form">
+        <table>
+            <tbody>
+            <tr>
+                <td width="101">用户名：</td>
+                <td width="295"><input type="text"  name="u_name"><span class="err pl10">*</span></td>
+                <td width="101"></td>
+                <td width="262"></td>
+            </tr>
+            <tr>
+                <td>真实姓名：</td>
+                <td><input type="text"  name="v_name"><span class="err pl10">*</span></td>
+                <td>性别：</td>
+                <td class="dan"><input type="radio" name="v_sex" value="1">女<input type="radio" name="v_sex" value="2">男 <span class="err pl10">*</span></td>
+            </tr>
+            <tr>
+                <td>生日：</td>
+                <td><input type="text" name="v_birth"><span class="err pl10">*</span></td>
+                <td>联系电话：</td>
+                <td><input  type="text" name="v_tel" value="" ><span class="err pl10">*</span> </td>
+            </tr>
+            <tr>
+                <td>联系地址：</td>
+                <td><input name="v_location" type="text" ><span class="err pl10">*</span></td>
+                <td>电子邮件：</td>
+                <td><input name="v_email" type="text"  value="" required="required"> <span class="err pl10">*</span></td>
+            </tr>
+            <tr>
+                <td>QQ：</td>
+                <td><input name="v_qq" type="text"  ></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>公司名称：</td>
+                <td><input  type="text" name="v_cname" ><span class="err pl10">*</span></td>
+                <td>公司地址：</td>
+                <td><input name="v_clocation" type="text" ><span class="err pl10">*</span></td>
+            </tr>
+            <tr>
+                <td>公司电话：</td>
+                <td><input  type="text"  name="v_ctel" value=""></td>
+                <td>公司邮编：</td>
+                <td><input  type="text" name="v_post" value=""><span class="err pl10">*</span> </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><a href="#" type="reset" class="btn1">清除重填</a> <a href="#" type="button" class="btn1" id="vip-submit">提交申请</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+
+    <div id="window-city">
+        <div id="city-box">
+            <div class="bg">
+
+            </div>
+        </div>
+    </div>
+</section>
+<!--底部其它信息-->
+<footer id="footer">
+
+</footer>
+
+<script src="../../static/js/common/jquery.js"></script>
+<script src="../../static/js/common/common.js"></script>
+<script src="../../static/js/common/bootstrap.js"></script>
+<!--<script src="../../static/js/customer/vip.js"></script>-->
+
+<script>
+
+    $(function () {
+
+        $('#vip-submit').click(function (e) {
+            e.preventDefault();
+            var _data=$('#vip-form').serialize();
+            $.ajax({
+                type:'POST',
+                url:'../../php/vip-regist.php',
+                data:_data,
+                success:function (res) {
+                    var _html;
+                    if(res.code == '2000'){
+                        _html = `<div class="alert-center"><p class="f20">您已经申请会员成功！</p><p class="sub"><a href="vip-home.html" class="">会员首页</a><a href="vip-home3.html">立即定制</a></p></div>`;
+                    }else if(res.code == '2001'){
+                        _html = `<div class="alert-center"><p class="f20">系统繁忙！请稍后再试</p><p class="sub"><a href="vip-home2.html" class="">会员申请</a></p></div>`;
+                    }else{
+                        _html = `<div class="alert-center"><p class="f20">用户名不存在！请重新输入</p><p class="sub"><a href="vip-home2.html" class="">会员申请</a></p></div>`;
+                    }
+                    ;
+                    $('#window-city').css('display','block');
+                    $('#window-city #city-box .bg').html(
+                            _html);
+                },
+                error:function (res) {
+                    var _html;
+                    _html = `<div class="alert-center"><p class="f20">系统繁忙！请稍后再试</p><p class="sub"><a href="vip-home2.html" class="">会员申请</a></p></div>`;
+
+//                    $('#window-city').css('display','block');
+//                    $('#window-city #city-box .bg').html(
+//                            _html);
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>
